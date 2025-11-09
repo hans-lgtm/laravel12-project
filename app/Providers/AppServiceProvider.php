@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\URL;
-
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,9 +20,15 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-{
-    if (config('app.env') === 'production') {
-        URL::forceScheme('https');
+    {
+        // Paksa semua URL jadi HTTPS di production (hilangkan warning "tidak aman")
+        if (config('app.env') === 'production') {
+            URL::forceScheme('https');
+        }
+
+        // Buat symbolic link storage otomatis jika belum ada
+        if (!file_exists(public_path('storage'))) {
+            Artisan::call('storage:link');
+        }
     }
-}
 }
