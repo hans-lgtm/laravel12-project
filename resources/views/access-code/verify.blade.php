@@ -111,7 +111,7 @@
         <!-- Footer -->
         <div class="text-center mt-6">
             <p class="text-white text-sm">
-                &copy; {{ date('Y') }} Sistem Pemilihan OSIS
+                &copy; {{ date('Y') }} M.Hanif | XII RPL 5
             </p>
         </div>
     </div>

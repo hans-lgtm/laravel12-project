@@ -87,7 +87,7 @@
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-6 mt-12">
         <div class="container mx-auto px-4 text-center">
-            <p>&copy; {{ date('Y') }} Pemilihan OSIS. Semua hak dilindungi.</p>
+            <p>&copy; {{ date('Y') }} @M.Hanif | XII RPL 5.</p>
         </div>
     </footer>
 
