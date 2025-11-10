@@ -26,88 +26,88 @@
     </div>
 
     <!-- Candidates Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        @foreach($candidates as $candidate)
-        <div class="candidate-card bg-white rounded-xl shadow-lg overflow-hidden border-2 border-transparent hover:border-blue-500 transition-all duration-300">
-            <!-- Header with Number -->
-            <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 text-center relative">
-                <div class="text-2xl font-bold">PASLON {{ $candidate->number }}</div>
-                <div class="absolute top-2 right-2 bg-white bg-opacity-20 rounded-full p-1">
-                    <i class="fas fa-users text-white text-sm"></i>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    @foreach($candidates as $candidate)
+    <div class="candidate-card bg-white rounded-xl shadow-md overflow-hidden border-2 border-transparent hover:border-blue-500 transition-all duration-300">
+        <!-- Header with Number -->
+        <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 text-center relative">
+            <div class="text-2xl font-bold">PASLON {{ $candidate->number }}</div>
+            <div class="absolute top-2 right-2 bg-white bg-opacity-20 rounded-full p-1">
+                <i class="fas fa-users text-white text-sm"></i>
+            </div>
+        </div>
+        
+        <!-- Photos -->
+        <div class="flex h-48">
+            <div class="w-1/2 bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center relative">
+                @if($candidate->chairman_photo)
+                <img src="{{ asset('storage/' . $candidate->chairman_photo) }}" 
+                     alt="{{ $candidate->chairman_name }}" 
+                     class="h-full w-full object-cover">
+                @else
+                <div class="text-center">
+                    <i class="fas fa-user text-blue-500 text-4xl mb-2"></i>
+                    <p class="text-blue-600 text-sm font-semibold">Ketua</p>
+                </div>
+                @endif
+                <div class="absolute bottom-0 left-0 right-0 bg-blue-500 bg-opacity-90 text-white text-center py-1 text-xs font-semibold">
+                    Ketua
                 </div>
             </div>
-            
-            <!-- Photos -->
-            <div class="flex h-48">
-                <div class="w-1/2 bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center relative">
-                    @if($candidate->chairman_photo)
-                    <img src="{{ asset('storage/' . $candidate->chairman_photo) }}" 
-                         alt="{{ $candidate->chairman_name }}" 
-                         class="h-full w-full object-cover">
-                    @else
-                    <div class="text-center">
-                        <i class="fas fa-user text-blue-500 text-4xl mb-2"></i>
-                        <p class="text-blue-600 text-sm font-semibold">Ketua</p>
-                    </div>
-                    @endif
-                    <div class="absolute bottom-0 left-0 right-0 bg-blue-500 bg-opacity-90 text-white text-center py-1 text-xs font-semibold">
-                        Ketua
-                    </div>
+            <div class="w-1/2 bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center relative">
+                @if($candidate->vice_chairman_photo)
+                <img src="{{ asset('storage/' . $candidate->vice_chairman_photo) }}" 
+                     alt="{{ $candidate->vice_chairman_name }}" 
+                     class="h-full w-full object-cover">
+                @else
+                <div class="text-center">
+                    <i class="fas fa-user text-purple-500 text-4xl mb-2"></i>
+                    <p class="text-purple-600 text-sm font-semibold">Wakil</p>
                 </div>
-                <div class="w-1/2 bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center relative">
-                    @if($candidate->vice_chairman_photo)
-                    <img src="{{ asset('storage/' . $candidate->vice_chairman_photo) }}" 
-                         alt="{{ $candidate->vice_chairman_name }}" 
-                         class="h-full w-full object-cover">
-                    @else
-                    <div class="text-center">
-                        <i class="fas fa-user text-purple-500 text-4xl mb-2"></i>
-                        <p class="text-purple-600 text-sm font-semibold">Wakil</p>
-                    </div>
-                    @endif
-                    <div class="absolute bottom-0 left-0 right-0 bg-purple-500 bg-opacity-90 text-white text-center py-1 text-xs font-semibold">
-                        Wakil
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Candidate Info -->
-            <div class="p-6">
-                <div class="mb-4 text-center">
-                    <h3 class="text-xl font-bold text-gray-800 mb-1">
-                        {{ $candidate->chairman_name }}
-                    </h3>
-                    <p class="text-lg text-gray-600 font-semibold">
-                        & {{ $candidate->vice_chairman_name }}
-                    </p>
-                </div>
-                
-                <!-- Action Buttons -->
-                <div class="flex flex-col space-y-3">
-                    <button onclick="showVisionMission({{ $candidate->id }})" 
-                            class="flex items-center justify-center px-4 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition transform hover:scale-105 shadow-md">
-                        <i class="fas fa-eye mr-2"></i>
-                        Lihat Visi & Misi
-                    </button>
-                    
-                    @if(!$hasVoted)
-                    <button type="button" 
-                            onclick="showVoteConfirmation({{ $candidate->id }}, '{{ $candidate->number }}', '{{ $candidate->chairman_name }}', '{{ $candidate->vice_chairman_name }}')"
-                            class="w-full flex items-center justify-center px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg hover:from-green-600 hover:to-emerald-700 transition transform hover:scale-105 shadow-md font-semibold">
-                        <i class="fas fa-vote-yea mr-2"></i>
-                        Pilih Paslon Ini
-                    </button>
-                    @else
-                    <button disabled class="w-full flex items-center justify-center px-4 py-3 bg-gray-400 text-white rounded-lg cursor-not-allowed shadow">
-                        <i class="fas fa-check-circle mr-2"></i>
-                        Sudah Memilih
-                    </button>
-                    @endif
+                @endif
+                <div class="absolute bottom-0 left-0 right-0 bg-purple-500 bg-opacity-90 text-white text-center py-1 text-xs font-semibold">
+                    Wakil
                 </div>
             </div>
         </div>
-        @endforeach
+        
+        <!-- Candidate Info -->
+        <div class="p-6">
+            <div class="mb-4 text-center">
+                <h3 class="text-xl font-bold text-gray-800 mb-1">
+                    {{ $candidate->chairman_name }}
+                </h3>
+                <p class="text-lg text-gray-600 font-semibold">
+                    & {{ $candidate->vice_chairman_name }}
+                </p>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="flex flex-col space-y-3">
+                <button onclick="showVisionMission({{ $candidate->id }})" 
+                        class="flex items-center justify-center px-4 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition transform hover:scale-105 shadow-md">
+                    <i class="fas fa-eye mr-2"></i>
+                    Lihat Visi & Misi
+                </button>
+                
+                @if(!$hasVoted)
+                <button type="button" 
+                        onclick="showVoteConfirmation({{ $candidate->id }}, '{{ $candidate->number }}', '{{ addslashes($candidate->chairman_name) }}', '{{ addslashes($candidate->vice_chairman_name) }}')"
+                        class="w-full flex items-center justify-center px-4 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg hover:from-green-600 hover:to-emerald-700 transition transform hover:scale-105 shadow-md font-semibold">
+                    <i class="fas fa-vote-yea mr-2"></i>
+                    Pilih Paslon Ini
+                </button>
+                @else
+                <button disabled class="w-full flex items-center justify-center px-4 py-3 bg-gray-400 text-white rounded-lg cursor-not-allowed shadow">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    Sudah Memilih
+                </button>
+                @endif
+            </div>
+        </div>
     </div>
+    @endforeach
+</div>
 </div>
 
 <!-- Vision Mission Modal -->
@@ -203,8 +203,15 @@
 <script>
 // Vision Mission Modal Functions
 function showVisionMission(candidateId) {
+    console.log('Loading vision mission for candidate:', candidateId);
+    
     fetch(`/candidate/${candidateId}/vision-mission`)
-        .then(response => response.text())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
         .then(html => {
             document.getElementById('modalContent').innerHTML = html;
             document.getElementById('visionMissionModal').classList.remove('hidden');
@@ -227,25 +234,26 @@ function closeVisionMissionModal() {
 
 // Vote Confirmation Modal Functions
 function showVoteConfirmation(candidateId, candidateNumber, chairmanName, viceChairmanName) {
+    console.log('Showing vote confirmation for candidate:', candidateId);
+    
+    // Decode names jika ada escape characters
+    chairmanName = chairmanName.replace(/\\'/g, "'");
+    viceChairmanName = viceChairmanName.replace(/\\'/g, "'");
+    
     // Update modal content
     document.getElementById('confirmationCandidateNumber').textContent = 'PASLON ' + candidateNumber;
     document.getElementById('confirmationCandidateNames').textContent = chairmanName + ' & ' + viceChairmanName;
     
     // Update form action
-    document.getElementById('voteForm').action = `/vote/${candidateId}`;
+    const form = document.getElementById('voteForm');
+    form.action = `/vote/${candidateId}`;
+    console.log('Form action set to:', form.action);
     
     // Show modal
     document.getElementById('voteConfirmationModal').classList.remove('hidden');
     setTimeout(() => {
         document.getElementById('voteConfirmationModal').style.transform = 'scale(1)';
     }, 10);
-}
-
-function closeVoteConfirmationModal() {
-    document.getElementById('voteConfirmationModal').style.transform = 'scale(0.95)';
-    setTimeout(() => {
-        document.getElementById('voteConfirmationModal').classList.add('hidden');
-    }, 200);
 }
 
 // Notification Functions

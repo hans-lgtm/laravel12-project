@@ -20,20 +20,27 @@ class ElectionController extends Controller
     // }
 
     public function index()
-    {
-        // Manual check access code
-        if (!Session::get('access_code_verified')) {
-            return redirect()->route('access-code.verify');
-        }
-
-        $candidates = Candidate::all();
-        
-        // Cek apakah sudah memilih berdasarkan session kode akses
-        $accessCodeId = Session::get('access_code_id');
-        $hasVoted = Vote::where('access_code_id', $accessCodeId)->exists();
-        
-        return view('election.index', compact('candidates', 'hasVoted'));
+{
+    // Manual check access code
+    if (!Session::get('access_code_verified')) {
+        return redirect()->route('access-code.verify');
     }
+
+    // Pastikan mengambil semua candidate
+    $candidates = Candidate::orderBy('number')->get();
+    
+    // Debug: log candidates
+    Log::info('Candidates loaded: ' . $candidates->count());
+    foreach ($candidates as $candidate) {
+        Log::info("Candidate {$candidate->id}: {$candidate->number} - {$candidate->chairman_name}");
+    }
+    
+    // Cek apakah sudah memilih berdasarkan session kode akses
+    $accessCodeId = Session::get('access_code_id');
+    $hasVoted = Vote::where('access_code_id', $accessCodeId)->exists();
+    
+    return view('election.index', compact('candidates', 'hasVoted'));
+}
 
     public function showVisionMission($id)
     {
